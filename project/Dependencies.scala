@@ -4,7 +4,7 @@ object Dependencies {
 
   object Versions {
     val akka = "2.6.10"
-    val cats = "2.2.0"
+    val cats = "2.3.0"
     val circe = "0.11.1"
     val enumeratum = "1.6.1"
     val pureConfig = "0.14.0"
@@ -14,8 +14,8 @@ object Dependencies {
 
     // Test
     val quicklens = "1.6.1"
-    val scalaCheck = "1.14.3"
-    val scalaTest = "3.2.2"
+    val scalaCheck = "1.15.1"
+    val scalaTest = "3.2.3"
     val scalaTestPlusScalaCheck = "3.2.2.0"
   }
 

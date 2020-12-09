@@ -4,7 +4,7 @@ name := "generic-bank-interview"
 
 version := "0.1"
 
-scalaVersion := "2.13.3"
+scalaVersion := "2.13.4"
 
 libraryDependencies ++= Seq(
   Libraries.akkaStream,
