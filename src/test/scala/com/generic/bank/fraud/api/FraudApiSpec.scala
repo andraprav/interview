@@ -10,8 +10,6 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
-import scala.concurrent.ExecutionContext
-
 class FraudApiSpec
     extends AnyWordSpec
     with Matchers
@@ -24,8 +22,6 @@ class FraudApiSpec
 
     val actorSystemModule = ActorSystemModule()
     val fraudApi = new DefaultFraudApi(actorSystemModule)
-
-    implicit val executionContext: ExecutionContext = actorSystemModule.executionContext
 
     "return Fraud" in {
       forAll { (financialMessage: FinancialMessage) =>
