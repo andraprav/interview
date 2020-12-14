@@ -77,13 +77,13 @@ class FraudApiSpec
 
     "return Future.Failure" in {
       forAll { (financialMessage: FinancialMessage) =>
-        val CADMessage = financialMessage
+        val AUDMessage = financialMessage
           .modify(_.amount.currency)
-          .setTo(FinancialMessage.Amount.Currency.CAD)
+          .setTo(FinancialMessage.Amount.Currency.AUD)
 
-        val result = fraudApi.handle(CADMessage)
+        val result = fraudApi.handle(AUDMessage)
 
-        recoverToExceptionIf[RuntimeException](result)
+        result.failed.futureValue shouldBe a[RuntimeException]
       }
     }
   }
