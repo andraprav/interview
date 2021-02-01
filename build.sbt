@@ -12,6 +12,7 @@ libraryDependencies ++= Seq(
   Libraries.enumeratum,
   Libraries.pureConfig,
   Libraries.logback,
+  Libraries.spray,
   Libraries.akkaStreamTestKit       % Test,
   Libraries.quicklens               % Test,
   Libraries.scalaCheck              % Test,
