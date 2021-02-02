@@ -9,6 +9,7 @@ object Dependencies {
     val enumeratum = "1.6.1"
     val pureConfig = "0.14.0"
     val spray = "1.3.6"
+    val jackson = "2.12.1"
 
     // Runtime
     val logback = "1.2.3"
@@ -28,6 +29,8 @@ object Dependencies {
     lazy val enumeratum = "com.beachape"          %% "enumeratum"  % Versions.enumeratum
     lazy val pureConfig = "com.github.pureconfig" %% "pureconfig"  % Versions.pureConfig
     lazy val spray =      "io.spray"              %%  "spray-json" % Versions.spray
+    lazy val jacksonCore =   "com.fasterxml.jackson.core"   % "jackson-databind"      % Versions.jackson
+    lazy val jacksonModule = "com.fasterxml.jackson.module" %% "jackson-module-scala" % Versions.jackson
 
     // Runtime
     lazy val logback = "ch.qos.logback" % "logback-classic" % Versions.logback

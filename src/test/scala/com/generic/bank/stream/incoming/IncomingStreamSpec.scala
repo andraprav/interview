@@ -36,7 +36,6 @@ class IncomingStreamSpec extends AnyWordSpec with Matchers with EitherValues {
           "mt202_2.json"
         )
       ).expectComplete()
-
     }
 
     "return an Error.DirectoryNotFound" in {
@@ -48,8 +47,6 @@ class IncomingStreamSpec extends AnyWordSpec with Matchers with EitherValues {
       val result = incomingStream.source()
 
       result.swap.getOrElse(null) shouldBe Error.DirectoryNotFound
-
     }
   }
-
 }
