@@ -12,7 +12,9 @@ trait MessageParser {
 class JsonMessageParser extends MessageParser {
   override def parse(file: File): Either[Error, FinancialMessage] = {
     val json = FileReader.readFile(file)
-    val financialMessage = JsonUtil.fromJson[FinancialMessage](json)
-    Right(financialMessage)
+    val message = JsonUtil.fromJson[Message](json)
+    println(message)
+
+    Right(new FinancialMessage(null, null, null))
   }
 }
