@@ -1,22 +1,10 @@
 package com.generic.bank.util
 
-import com.fasterxml.jackson.core.`type`.TypeReference
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility
+import com.fasterxml.jackson.annotation.PropertyAccessor
+import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
 
 object JsonUtil {
-  private val mapper = JsonMapper.builder()
-    .addModule(DefaultScalaModule)
-    .build()
-
+  val mapper: ObjectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, Visibility.ANY)
   mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-
-  def toJson(value: Any): String = {
-    mapper.writeValueAsString(value)
-  }
-
-  def fromJson[T](json: String): T = {
-    mapper.readValue(json, new TypeReference[T] {})
-  }
 }
