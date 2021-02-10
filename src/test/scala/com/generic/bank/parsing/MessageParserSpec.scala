@@ -23,8 +23,8 @@ class MessageParserSpec
 
       val path = getClass.getResource("/messages/mt103_1.json").getPath
       val file = new File(path)
-      val sender = SenderBic(Bic("4"))
-      val receiver = ReceiverBic(Bic("4"))
+      val sender = SenderBic(Bic("BE71096123456769"))
+      val receiver = ReceiverBic(Bic("RO09BCYP0000001234567890"))
       val amount = Amount(Value(123), EUR)
       val financialMessage = new FinancialMessage(sender, receiver, amount)
 

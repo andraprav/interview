@@ -10,14 +10,22 @@ import com.fasterxml.jackson.annotation.{JsonProperty, JsonSubTypes, JsonTypeInf
   Array(
     new Type(value = classOf[MT103], name = "MT103"),
     new Type(value = classOf[MT202], name = "MT202")))
-sealed trait Message extends Serializable
+sealed trait Message extends Serializable {
+  val value: String
+  val sender: String
+  val receiver: String
+}
 
 object Message {}
 
-final case class MT103(@JsonProperty(value = "33B") value: String) extends Message with Serializable
+final case class MT103(@JsonProperty(value = "33B") value: String,
+                       @JsonProperty(value = "50A") sender: String,
+                       @JsonProperty(value = "59A") receiver: String) extends Message with Serializable
 
 object MT103 {}
 
-final case class MT202(@JsonProperty(value = "32A") value: String) extends Message with Serializable
+final case class MT202(@JsonProperty(value = "32A") value: String,
+                       @JsonProperty(value = "52A") sender: String,
+                       @JsonProperty(value = "58A") receiver: String) extends Message with Serializable
 
 object MT202 {}
