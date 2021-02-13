@@ -36,8 +36,17 @@ class MessageParserSpec
     "return XXX is not supported" in {
       val path = getClass.getResource("/messages/mt103_3.json").getPath
       val file = new File(path)
-      val currency = "XXX"
-      val error = Error.Illegal(currency + " is not supported").asLeft
+      val error = Error.Illegal("XXX is not supported").asLeft
+
+      val result = messageParser.parse(file)
+
+      result shouldBe error
+    }
+
+    "return INCORRECT_FIELD not a valid field" in {
+      val path = getClass.getResource("/messages/mt202_1.json").getPath
+      val file = new File(path)
+      val error = Error.Illegal("INCORRECT_FIELD not a valid field").asLeft
 
       val result = messageParser.parse(file)
 
