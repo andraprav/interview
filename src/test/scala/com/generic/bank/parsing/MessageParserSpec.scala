@@ -1,7 +1,7 @@
 package com.generic.bank.parsing
 
 import cats.implicits.catsSyntaxEitherId
-import com.generic.bank.domain.FinancialMessage.Amount.Currency.EUR
+import com.generic.bank.domain.FinancialMessage.Amount.Currency.{CHF, EUR}
 import com.generic.bank.domain.FinancialMessage.Amount.Value
 import com.generic.bank.domain.FinancialMessage.{Amount, ReceiverBic, SenderBic}
 import com.generic.bank.domain.{Bic, FinancialMessage}
@@ -20,7 +20,7 @@ class MessageParserSpec
 
     val messageParser = new JsonMessageParser
 
-    "return financialMessage" in {
+    "return financialMessage from mt103" in {
       val path = getClass.getResource("/messages/mt103_1.json").getPath
       val file = new File(path)
       val sender = SenderBic(Bic("BE71096123456769"))
@@ -41,6 +41,19 @@ class MessageParserSpec
       val result = messageParser.parse(file)
 
       result shouldBe error
+    }
+
+    "return financialMessage from mt202" in {
+      val path = getClass.getResource("/messages/mt202_2.json").getPath
+      val file = new File(path)
+      val sender = SenderBic(Bic("BBRUBEBB"))
+      val receiver = ReceiverBic(Bic("RNCBROBU"))
+      val amount = Amount(Value(123), CHF)
+      val financialMessage = new FinancialMessage(sender, receiver, amount).asRight
+
+      val result = messageParser.parse(file)
+
+      result shouldBe financialMessage
     }
 
     "return INCORRECT_FIELD not a valid field" in {
