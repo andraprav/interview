@@ -1,5 +1,6 @@
 package com.generic.bank.parsing
 
+import cats.implicits.catsSyntaxEitherId
 import com.generic.bank.domain.FinancialMessage.Amount.Currency.EUR
 import com.generic.bank.domain.FinancialMessage.Amount.Value
 import com.generic.bank.domain.FinancialMessage.{Amount, ReceiverBic, SenderBic}
@@ -20,18 +21,27 @@ class MessageParserSpec
     val messageParser = new JsonMessageParser
 
     "return financialMessage" in {
-
       val path = getClass.getResource("/messages/mt103_1.json").getPath
       val file = new File(path)
       val sender = SenderBic(Bic("BE71096123456769"))
       val receiver = ReceiverBic(Bic("RO09BCYP0000001234567890"))
       val amount = Amount(Value(123), EUR)
-      val financialMessage = new FinancialMessage(sender, receiver, amount)
+      val financialMessage = new FinancialMessage(sender, receiver, amount).asRight
 
       val result = messageParser.parse(file)
 
-      result shouldBe Right(financialMessage)
+      result shouldBe financialMessage
+    }
 
+    "return XXX is not supported" in {
+      val path = getClass.getResource("/messages/mt103_3.json").getPath
+      val file = new File(path)
+      val currency = "XXX"
+      val error = Error.Illegal(currency + " is not supported").asLeft
+
+      val result = messageParser.parse(file)
+
+      result shouldBe error
     }
   }
 
