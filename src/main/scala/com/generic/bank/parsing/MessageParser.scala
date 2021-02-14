@@ -12,7 +12,7 @@ trait MessageParser {
   def parse(file: File): Either[Error, FinancialMessage]
 }
 
-class JsonMessageParser extends MessageParser {
+class FinancialMessageParser extends MessageParser {
   override def parse(file: File): Either[Error, FinancialMessage] = {
     val json = FileReader.readFile(file)
     val messageOption = readValue(json)
@@ -33,7 +33,5 @@ class JsonMessageParser extends MessageParser {
       case Left(e) => e.asLeft
 
     }
-
-
   }
 }

@@ -17,10 +17,9 @@ class MessageParserSpec
     with ScalaCheckPropertyChecks {
 
   "MessageParser#parse" should {
+    val messageParser = new FinancialMessageParser
 
-    val messageParser = new JsonMessageParser
-
-    "return financialMessage from mt103" in {
+    "return financialMessage from mt103 message type" in {
       val path = getClass.getResource("/messages/mt103_1.json").getPath
       val file = new File(path)
       val sender = SenderBic(Bic("BE71096123456769"))
@@ -43,7 +42,7 @@ class MessageParserSpec
       result shouldBe error
     }
 
-    "return financialMessage from mt202" in {
+    "return financialMessage from mt202 message type" in {
       val path = getClass.getResource("/messages/mt202_2.json").getPath
       val file = new File(path)
       val sender = SenderBic(Bic("BBRUBEBB"))
