@@ -20,6 +20,8 @@ object Message {}
 
 final case class MT103(@JsonProperty(value = "33B") value: String,
                        @JsonProperty(value = "50A") sender: String,
+                       @JsonProperty(value = "51A") senderInstitution: String,
+                       @JsonProperty(value = "57A") receiverInstitution: String,
                        @JsonProperty(value = "59A") receiver: String) extends Message with Serializable
 
 object MT103 {}
