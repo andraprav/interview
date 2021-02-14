@@ -36,5 +36,57 @@ class FraudClientSpec
         }
       }
     }
+
+    "return NoFraud" in {
+      forAll { (financialMessage: FinancialMessage) =>
+        val noFraudMessage = financialMessage
+          .modify(_.amount.currency)
+          .setTo(FinancialMessage.Amount.Currency.EUR)
+        for {
+          res <- fraudClient.call(noFraudMessage)
+        } yield {
+          res shouldBe FraudResult.NoFraud
+        }
+      }
+    }
+
+    "return an Error.Illegal" in {
+      forAll { (financialMessage: FinancialMessage) =>
+        val CHFMessage = financialMessage
+          .modify(_.amount.currency)
+          .setTo(FinancialMessage.Amount.Currency.CHF)
+        for {
+          res <- fraudClient.call(CHFMessage)
+        } yield {
+          res.swap.getOrElse(null) shouldBe a[Error.Illegal]
+        }
+      }
+    }
+
+    "return an Error.System" in {
+      forAll { (financialMessage: FinancialMessage) =>
+        val JPYMessage = financialMessage
+          .modify(_.amount.currency)
+          .setTo(FinancialMessage.Amount.Currency.JPY)
+        for {
+          res <- fraudClient.call(JPYMessage)
+        } yield {
+          res.swap.getOrElse(null) shouldBe a[Error.System]
+        }
+      }
+    }
+
+    "return Future.Failure" in {
+      forAll { (financialMessage: FinancialMessage) =>
+        val AUDMessage = financialMessage
+          .modify(_.amount.currency)
+          .setTo(FinancialMessage.Amount.Currency.AUD)
+        for {
+          res <- fraudClient.call(AUDMessage)
+        } yield {
+          res.swap.getOrElse(null) shouldBe a[RuntimeException]
+        }
+      }
+    }
   }
 }
