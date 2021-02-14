@@ -13,14 +13,16 @@ trait MessageParser {
 }
 
 class FinancialMessageParser extends MessageParser {
+  private val currencyLength = 3;
+
   override def parse(file: File): Either[Error, FinancialMessage] = {
     val json = FileReader.readFile(file)
     val messageOption = readValue(json)
 
     messageOption match {
-      case Right(message) => {
-        val currencyValue = message.value.substring(0, 3)
-        val amountValue = message.value.substring(3).toDouble
+      case Right(message) =>
+        val currencyValue = message.value.substring(0, currencyLength)
+        val amountValue = message.value.substring(currencyLength).toDouble
 
         val sender = SenderBic(Bic(message.sender))
         val receiver = ReceiverBic(Bic(message.receiver))
@@ -29,9 +31,7 @@ class FinancialMessageParser extends MessageParser {
           case Right(value) => Right(new FinancialMessage(sender, receiver, Amount(Amount.Value(amountValue), value)))
           case Left(value) => Error.Illegal(value.notFoundName + " is not supported").asLeft
         }
-      }
       case Left(e) => e.asLeft
-
     }
   }
 }
