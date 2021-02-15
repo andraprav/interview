@@ -5,8 +5,8 @@ import akka.stream.scaladsl.Source
 import cats.implicits.catsSyntaxEitherId
 import com.generic.bank.domain.FinancialMessage
 import com.generic.bank.fraud.api.DefaultFraudApi
-import com.generic.bank.fraud.client.DefaultFraudClient
 import com.generic.bank.fraud.client.domain.FraudResult.Fraud
+import com.generic.bank.fraud.client.{DefaultFraudClient, FraudMapper}
 import com.generic.bank.modules.ActorSystemModule
 import com.generic.bank.parsing.FinancialMessageParser
 
@@ -23,7 +23,8 @@ object OutgoingStream {
 
   private val messageParser = new FinancialMessageParser
   private val fraudApi = new DefaultFraudApi(actorSystemModule)
-  private val fraudClient = new DefaultFraudClient(actorSystemModule, fraudApi)
+  private val fraudMapper = new FraudMapper()
+  private val fraudClient = new DefaultFraudClient(actorSystemModule, fraudApi, fraudMapper)
 
   def process(source: Source[File, NotUsed]): Source[Future[Either[Error, FinancialMessage]], NotUsed] = {
     val outgoingStream = source.map(file => {

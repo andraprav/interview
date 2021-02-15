@@ -21,7 +21,8 @@ class FraudClientSpec
   "FraudClient#call" should {
     val actorSystemModule = ActorSystemModule()
     val fraudApi = new DefaultFraudApi(actorSystemModule)
-    val fraudClient = new DefaultFraudClient(actorSystemModule, fraudApi)
+    val fraudMapper = new FraudMapper
+    val fraudClient = new DefaultFraudClient(actorSystemModule, fraudApi, fraudMapper)
     implicit val executionSystem: ExecutionContext = actorSystemModule.executionContext
 
     "return Fraud" in {
