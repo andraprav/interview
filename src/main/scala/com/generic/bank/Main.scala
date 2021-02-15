@@ -1,7 +1,7 @@
 package com.generic.bank
 
 import akka.actor.ActorSystem
-import akka.stream.scaladsl.{Keep, Sink}
+import akka.stream.scaladsl.Sink
 import com.generic.bank.config.ApplicationConfig
 import com.generic.bank.domain.FinancialMessage
 import com.generic.bank.modules.ActorSystemModule
@@ -28,7 +28,6 @@ object Main extends App {
       case _ =>
     })
 
-  val runnable = output.toMat(sink)(Keep.right)
   output.runWith(sink)
 
 }

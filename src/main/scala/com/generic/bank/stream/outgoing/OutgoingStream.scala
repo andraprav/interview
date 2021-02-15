@@ -29,11 +29,10 @@ object OutgoingStream {
   def process(source: Source[File, NotUsed]): Source[Future[Either[Error, FinancialMessage]], NotUsed] = {
     val outgoingStream = source.map(file => {
       val financialMessageEither = messageParser.parse(file)
-      val financialMessage = financialMessageEither match {
+      financialMessageEither match {
         case Left(_) => Future(Error.ParsingError.asLeft)
         case Right(value) => getFraud(value)
       }
-      financialMessage
     })
     outgoingStream
   }
