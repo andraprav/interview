@@ -16,8 +16,6 @@ sealed trait Message extends Serializable {
   val receiver: String
 }
 
-object Message {}
-
 final case class MT103(@JsonProperty(value = "33B") value: String,
                        @JsonProperty(value = "50A") sender: String,
                        @JsonProperty(value = "51A") senderInstitution: String,
