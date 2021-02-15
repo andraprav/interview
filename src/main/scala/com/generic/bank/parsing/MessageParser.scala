@@ -26,10 +26,10 @@ class FinancialMessageParser extends MessageParser {
 
         val sender = SenderBic(Bic(message.sender))
         val receiver = ReceiverBic(Bic(message.receiver))
-        val currency = Amount.Currency.withNameEither(currencyValue)
-        currency match {
-          case Right(value) => Right(new FinancialMessage(sender, receiver, Amount(Amount.Value(amountValue), value)))
-          case Left(value) => Error.Illegal(value.notFoundName + " is not supported").asLeft
+        val currencyEither = Amount.Currency.withNameEither(currencyValue)
+        currencyEither match {
+          case Right(currency) => Right(new FinancialMessage(sender, receiver, Amount(Amount.Value(amountValue), currency)))
+          case Left(currency) => Error.Illegal(currency.notFoundName + " is not supported").asLeft
         }
       case Left(e) => e.asLeft
     }
